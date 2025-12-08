@@ -1,0 +1,11 @@
+{
+  "name": "Shared.Foundation.Editor",
+  "rootNamespace": "Shared.Foundation.Editor",
+  "references": [
+    "Shared.Foundation"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}
