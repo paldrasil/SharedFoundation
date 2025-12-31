@@ -1,6 +1,6 @@
 {
   "name": "com.paldrasil.shared.foundation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "Shared Foundation",
   "description": "Shared foundation library for Paldrasil games.",
   "unity": "6000.2",

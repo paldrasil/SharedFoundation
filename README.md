@@ -114,6 +114,47 @@ if (Locator<IMyService>.TryGet(out var service))
 }
 ```
 
+### BTSimple (Behavior Tree)
+
+Simple behavior tree implementation for reactive AI systems:
+
+- **BTNode**: Base abstract class for all nodes
+- **Selector**: Reactive priority selector that auto-resets old running branch when switching
+- **Sequence**: Memory sequence that keeps index while Running
+- **Condition**: Leaf node that evaluates a predicate function
+- **ActionNode**: Leaf node that executes an action function
+
+```csharp
+using Shared.Foundation;
+
+// Create a behavior tree
+var root = new Selector("Root")
+    .Add(new Sequence("Patrol Sequence")
+        .Add(new Condition("Is Idle", () => enemyState == EnemyState.Idle))
+        .Add(new ActionNode("Start Patrol", () => {
+            StartPatrol();
+            return NodeState.Running;
+        })))
+    .Add(new Sequence("Attack Sequence")
+        .Add(new Condition("Can See Player", () => CanSeePlayer()))
+        .Add(new ActionNode("Attack", () => {
+            Attack();
+            return NodeState.Success;
+        })));
+
+// Tick the tree (typically in Update)
+var state = root.Tick();
+
+// Reset the tree if needed
+root.Reset();
+```
+
+**Key Features:**
+- **Reactive Selector**: Automatically resets the previously running branch when switching to a new priority branch
+- **Memory Sequence**: Remembers progress through children while Running, resets on Failure
+- **Named Nodes**: All nodes support custom names for debugging
+- **State Tracking**: Each node tracks LastState and LastTickFrame
+
 ## Requirements
 
 - Unity 6000.2 or higher
